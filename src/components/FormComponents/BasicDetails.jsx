@@ -14,7 +14,7 @@ export default function BasicDetails() {
     last_name: "",
     email_address: "",
     phone_number: "",
-    // user_id to be stored in localstorage
+    // user_id to be stored in localstorage, and fetched from somewhere... to be decided
     user_id: uuidv4(),
     address: "",
     objective: "",
