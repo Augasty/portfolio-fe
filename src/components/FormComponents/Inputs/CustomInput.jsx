@@ -1,4 +1,4 @@
-import React from "react";
+import PropTypes from 'prop-types';
 
 const CustomInput = ({ small, title, formData, variable, setFormData }) => {
   const size = small ?  "w-full md:w-1/2 px-3 mb-6" : "w-full px-3" 
@@ -24,4 +24,12 @@ const CustomInput = ({ small, title, formData, variable, setFormData }) => {
   );
 };
 
+
+CustomInput.propTypes = {
+  small: PropTypes.bool.isRequired, // Boolean prop
+  title: PropTypes.string.isRequired, // Required string prop
+  formData: PropTypes.object.isRequired, // Required object prop
+  variable: PropTypes.string.isRequired, // Required string prop
+  setFormData: PropTypes.func.isRequired, // Required function prop
+};
 export default CustomInput;

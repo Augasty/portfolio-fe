@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
@@ -18,29 +18,25 @@ export default function EducationalDetails() {
     end_date: "",
   };
 
-  const [formData, setFormData] = useState([initialFormData]);
+  const [formDataArr, setFormDataArr] = useState([initialFormData]);
   const [repeatCount, setRepeatCount] = useState(1);
 
   const handleRepeatClick = () => {
     setRepeatCount(repeatCount + 1);
-    setFormData([...formData, initialFormData]);
+    setFormDataArr([...formDataArr, initialFormData]); 
   };
 
   const handleChange = (index, field, value) => {
-    const updatedFormData = [...formData];
+    const updatedFormDataArr = [...formDataArr]; 
 
-    updatedFormData[index] = {
-      ...updatedFormData[index],
+    updatedFormDataArr[index] = {
+      ...updatedFormDataArr[index],
       [field]: value,
     };
-    setFormData(updatedFormData);
+    setFormDataArr(updatedFormDataArr);
   };
 
-  // const handleFormSubmit = ( event) => {
-  //   event.preventDefault();
-  //   // Handle form submission if needed
-  //   console.log(`Form  submitted with data:`, formData);
-  // };
+
   // need an useeffect that will fetch data for existing user when the page is loaded.
   // anupam da to create the api to get data of a single user. - sayak 8.9.23
   const goBack = (e) => {
@@ -53,20 +49,20 @@ export default function EducationalDetails() {
     e.preventDefault();
 
     try {
-      const response = await axios.post("www.api.com", formData);
+      const response = await axios.post("www.api.com", formDataArr); 
       console.log(response.data);
     } catch (error) {
       console.error("Error:", error);
     } finally {
-      console.log(formData);
-      // navigate("/experience");
+      console.log(formDataArr); 
+      navigate("/experience");
     }
   };
 
   return (
     <>
       <div className="text-center mb-16 my-10">
-        <h3 className="Page heading text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-white-900">
+        <h3 className="Page heading text-3xl sm:text-4xl leading-normal font-extrabold tracking-tight text-white">
           Education <span className="text-indigo-600">Details</span>
         </h3>
       </div>
@@ -83,7 +79,7 @@ export default function EducationalDetails() {
                 <IndexedInput
                   small={false}
                   title="Institution Name"
-                  formData={formData}
+                  formDataArr={formDataArr} 
                   index={index}
                   variable="institution_Name"
                   handleChange={handleChange}
@@ -91,7 +87,7 @@ export default function EducationalDetails() {
                 <IndexedInput
                   small={false}
                   title="Location"
-                  formData={formData}
+                  formDataArr={formDataArr} 
                   index={index}
                   variable="location"
                   handleChange={handleChange}
@@ -99,7 +95,7 @@ export default function EducationalDetails() {
                 <IndexedInput
                   small={false}
                   title="Major"
-                  formData={formData}
+                  formDataArr={formDataArr} 
                   index={index}
                   variable="major"
                   handleChange={handleChange}
@@ -108,7 +104,7 @@ export default function EducationalDetails() {
                 <IndexedInput
                   small={false}
                   title="Description"
-                  formData={formData}
+                  formDataArr={formDataArr} 
                   index={index}
                   variable="description"
                   handleChange={handleChange}
@@ -116,7 +112,7 @@ export default function EducationalDetails() {
                 <IndexedInput
                   small={true}
                   title="Start Date"
-                  formData={formData}
+                  formDataArr={formDataArr} 
                   index={index}
                   variable="start_date"
                   handleChange={handleChange}
@@ -124,7 +120,7 @@ export default function EducationalDetails() {
                 <IndexedInput
                   small={true}
                   title="End Date"
-                  formData={formData}
+                  formDataArr={formDataArr} 
                   index={index}
                   variable="end_date"
                   handleChange={handleChange}
