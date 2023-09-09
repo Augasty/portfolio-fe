@@ -142,7 +142,7 @@ export default function EducationalDetails() {
               type="button"
               onClick={handleRepeatClick}
             >
-              Add experience
+              Add Education
             </button>
             <button
               className="bg-gray-200 rounded hover:border-black text-gray-700 font-bold py-2 px-4"

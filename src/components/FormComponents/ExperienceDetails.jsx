@@ -5,7 +5,7 @@ import axios from "axios";
 import "./styles.css";
 import IndexedInput from "./Inputs/IndexedInput";
 
-export default function EducationalDetails() {
+export default function ExperienceDetails() {
   const navigate = useNavigate();
 
   const initialFormData = {
@@ -143,7 +143,7 @@ export default function EducationalDetails() {
               type="button"
               onClick={handleRepeatClick}
             >
-              Add experience
+              Add Experience
             </button>
             <button
               className="bg-gray-200 rounded hover:border-black text-gray-700 font-bold py-2 px-4"
