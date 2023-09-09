@@ -1,14 +1,13 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import "./styles.css";
-import SmallInput from "./Inputs/SmallInput";
-import LargeInput from "./Inputs/LargeInput";
+import CustomInput from "./Inputs/CustomInput";
 
 export default function BasicDetails() {
   const navigate = useNavigate();
-  
+
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
@@ -54,51 +53,53 @@ export default function BasicDetails() {
         <div className="max-w-screen-md mx-auto p-5">
           <form className="Content w-full" onSubmit={handleSubmit}>
             <div className="flex flex-wrap -mx-3 mb-6">
-              <SmallInput
+              <CustomInput
+                small={true}
                 title="First Name"
                 formData={formData}
                 variable="first_name"
                 setFormData={setFormData}
               />
-
-              <SmallInput
+              <CustomInput
+                small={true}
                 title="Last Name"
                 formData={formData}
                 variable="last_name"
                 setFormData={setFormData}
               />
-              <SmallInput
+              <CustomInput
+                small={true}
                 title="Email"
                 formData={formData}
                 variable="email_address"
                 setFormData={setFormData}
               />
-              <SmallInput
+              <CustomInput
+                small={true}
                 title="Contact Number"
                 formData={formData}
                 variable="phone_number"
                 setFormData={setFormData}
               />
 
-              {/**
-               * ------------- Address ---------------------------------------------------------
-               */}
-
-              <LargeInput
+              <CustomInput
+                small={false}
                 title="Address"
                 formData={formData}
                 variable="address"
                 setFormData={setFormData}
               />
 
-              <LargeInput
+              <CustomInput
+                small={false}
                 title="Head Line"
                 formData={formData}
                 variable="headline"
                 setFormData={setFormData}
               />
 
-              <LargeInput
+              <CustomInput
+                small={false}
                 title="Role Objective"
                 formData={formData}
                 variable="objective"

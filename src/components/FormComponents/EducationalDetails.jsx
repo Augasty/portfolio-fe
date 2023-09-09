@@ -3,22 +3,44 @@ import { useNavigate } from "react-router-dom";
 import { v4 as uuidv4 } from "uuid";
 import axios from "axios";
 import "./styles.css";
-import SmallInput from "./Inputs/SmallInput";
-import LargeInput from "./Inputs/LargeInput";
+import IndexedInput from "./Inputs/IndexedInput";
 
 export default function EducationalDetails() {
   const navigate = useNavigate();
 
-  const [formData, setFormData] = useState({
+  const initialFormData = {
     user_id: uuidv4(),
     institution_Name: "",
     location: "",
     major: "",
     description: "",
     start_date: "",
-    end_Date: "",
-  });
+    end_date: "",
+  };
 
+  const [formData, setFormData] = useState([initialFormData]);
+  const [repeatCount, setRepeatCount] = useState(1);
+
+  const handleRepeatClick = () => {
+    setRepeatCount(repeatCount + 1);
+    setFormData([...formData, initialFormData]);
+  };
+
+  const handleChange = (index, field, value) => {
+    const updatedFormData = [...formData];
+
+    updatedFormData[index] = {
+      ...updatedFormData[index],
+      [field]: value,
+    };
+    setFormData(updatedFormData);
+  };
+
+  // const handleFormSubmit = ( event) => {
+  //   event.preventDefault();
+  //   // Handle form submission if needed
+  //   console.log(`Form  submitted with data:`, formData);
+  // };
   // need an useeffect that will fetch data for existing user when the page is loaded.
   // anupam da to create the api to get data of a single user. - sayak 8.9.23
   const goBack = (e) => {
@@ -27,7 +49,7 @@ export default function EducationalDetails() {
     // should we submit if we go back, need to discuss. -sayak 8.9.23
     navigate("/basic");
   };
-  const handleSubmit = async (e) => {
+  const handleFormSubmit = async (e) => {
     e.preventDefault();
 
     try {
@@ -37,7 +59,7 @@ export default function EducationalDetails() {
       console.error("Error:", error);
     } finally {
       console.log(formData);
-      navigate("/experience");
+      // navigate("/experience");
     }
   };
 
@@ -51,63 +73,89 @@ export default function EducationalDetails() {
 
       <div className="container-fluid mx-10">
         <div className="max-w-screen-md mx-auto p-5">
-          <form className="Content w-full" onSubmit={handleSubmit}>
-            <div className="flex flex-wrap -mx-3 mb-6">
-              <LargeInput
-                title="Institution Name"
-                formData={formData}
-                variable="institution_Name"
-                setFormData={setFormData}
-              />
-              <LargeInput
-                title="Institution Location"
-                formData={formData}
-                variable="location"
-                setFormData={setFormData}
-              />
-              <LargeInput
-                title="Major"
-                formData={formData}
-                variable="major"
-                setFormData={setFormData}
-              />
-              <LargeInput
-                title="Description"
-                formData={formData}
-                variable="description"
-                setFormData={setFormData}
-              />
+          {Array.from({ length: repeatCount }, (_, index) => (
+            <form
+              className="Content w-full"
+              key={index}
+              onSubmit={(e) => handleFormSubmit(e)}
+            >
+              <div className="flex flex-wrap -mx-3 mb-6">
+                <IndexedInput
+                  small={false}
+                  title="Institution Name"
+                  formData={formData}
+                  index={index}
+                  variable="institution_Name"
+                  handleChange={handleChange}
+                />
+                <IndexedInput
+                  small={false}
+                  title="Location"
+                  formData={formData}
+                  index={index}
+                  variable="location"
+                  handleChange={handleChange}
+                />
+                <IndexedInput
+                  small={false}
+                  title="Major"
+                  formData={formData}
+                  index={index}
+                  variable="major"
+                  handleChange={handleChange}
+                />
 
-              <SmallInput
-                title="Starting date"
-                formData={formData}
-                variable="start_date"
-                setFormData={setFormData}
-              />
-              <SmallInput
-                title="Ending date"
-                formData={formData}
-                variable="end_date"
-                setFormData={setFormData}
-              />
-
-              <div className="w-full flex justify-center mt-4">
-                <button
-                  className="bg-gray-200 rounded hover:border-black text-gray-700 font-bold py-2 px-4 mr-8" // Added "mr-2" for right margin
-                  type="button"
-                  onClick={(e) => goBack(e)}
-                >
-                  Back
-                </button>
-                <button
-                  className="bg-gray-200 rounded hover:border-black text-gray-700 font-bold py-2 px-4"
-                  type="submit"
-                >
-                  Next
-                </button>
+                <IndexedInput
+                  small={false}
+                  title="Description"
+                  formData={formData}
+                  index={index}
+                  variable="description"
+                  handleChange={handleChange}
+                />
+                <IndexedInput
+                  small={true}
+                  title="Start Date"
+                  formData={formData}
+                  index={index}
+                  variable="start_date"
+                  handleChange={handleChange}
+                />
+                <IndexedInput
+                  small={true}
+                  title="End Date"
+                  formData={formData}
+                  index={index}
+                  variable="end_date"
+                  handleChange={handleChange}
+                />
               </div>
-            </div>
-          </form>
+            </form>
+          ))}
+
+          <div className="w-full flex justify-center mt-4">
+            <button
+              className="bg-gray-200 rounded hover:border-black text-gray-700 font-bold py-2 px-4 mr-8" // Added "mr-2" for right margin
+              type="button"
+              onClick={(e) => goBack(e)}
+            >
+              Back
+            </button>
+            <button
+              className="bg-gray-200 rounded hover:border-black text-gray-700 font-bold py-2 px-4 mr-8"
+              type="button"
+              onClick={handleRepeatClick}
+            >
+              Add experience
+            </button>
+            <button
+              className="bg-gray-200 rounded hover:border-black text-gray-700 font-bold py-2 px-4"
+              type="submit"
+              onClick={handleFormSubmit}
+            >
+              Next
+            </button>
+          </div>
         </div>
       </div>
     </>

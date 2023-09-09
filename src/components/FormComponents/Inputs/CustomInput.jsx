@@ -1,8 +1,9 @@
 import React from "react";
 
-const LargeInput = ({ title, formData, variable, setFormData }) => {
+const CustomInput = ({ small, title, formData, variable, setFormData }) => {
+  const size = small ?  "w-full md:w-1/2 px-3 mb-6" : "w-full px-3" 
   return (
-    <div className="w-full px-3">
+    <div className= {size}>
       <label
         className="block uppercase tracking-wide text-white text-xs font-bold mb-2 "
         htmlFor="grid-password"
@@ -23,4 +24,4 @@ const LargeInput = ({ title, formData, variable, setFormData }) => {
   );
 };
 
-export default LargeInput;
+export default CustomInput;
